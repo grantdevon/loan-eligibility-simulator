@@ -6,6 +6,44 @@ import './App.css'
 function App() {
   const [count, setCount] = useState(0)
 
+
+  /**
+   * Test function to check loan eligibility via the mock API
+   * 
+   * TODO: Remove.
+   */
+  const checkLoanEligibility = async () => {
+    try {
+      const response = await fetch('/api/loans/eligibility', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          personalInfo: {
+            age: 30,
+            employmentStatus: 'FULL_TIME',
+            monthlyIncome: 5000
+          },
+          loanDetails: {
+            requestedAmount: 10000,
+            loanPurpose: 'PERSONAL',
+            loanTerm: 12
+          }
+        })
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      console.log('Loan eligibility response:', data);
+    } catch (error) {
+      console.error('Error checking loan eligibility:', error);
+    }
+  };
+
   return (
     <>
       <div>
@@ -20,6 +58,9 @@ function App() {
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
+        </button>
+        <button onClick={checkLoanEligibility}>
+          Check Loan Eligibility
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
