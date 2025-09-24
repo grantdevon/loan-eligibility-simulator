@@ -1,6 +1,9 @@
+import type { InterestRateCalculationRequest } from "../types/interestRate";
+import type { LoanEligibilityRequest } from "../types/loanEligibility";
+
 const BASE_URL = '/api/loans';
 
-export const checkEligibility = async (payload: any) => {
+export const checkEligibility = async (payload: LoanEligibilityRequest) => {
 	const res = await fetch(`${BASE_URL}/eligibility`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
@@ -14,7 +17,7 @@ export const getLoanProducts = async () => {
 	return res.json();
 };
 
-export const calculateRate = async (payload: any) => {
+export const calculateRate = async (payload: InterestRateCalculationRequest) => {
 	const res = await fetch(`${BASE_URL}/calculate-rate`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
