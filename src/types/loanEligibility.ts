@@ -1,3 +1,5 @@
+import type { LoanPurpose } from "./loanProducts";
+
 export type EmploymentStatus = "employed" | "self_employed" | "unemployed" | "retired" | string;
 export type RiskCategory = "low" | "medium" | "high" | string;
 export type AffordabilityScore = "poor" | "fair" | "good" | "excellent" | string;
@@ -18,7 +20,7 @@ export interface FinancialInfo {
 export interface LoanDetails {
     requestedAmount: number;
     loanTerm: number;
-    loanPurpose: string;
+    loanPurpose: LoanPurpose;
 }
 
 export interface LoanEligibilityRequest {
@@ -26,7 +28,6 @@ export interface LoanEligibilityRequest {
     financialInfo: FinancialInfo;
     loanDetails: LoanDetails;
 }
-
 
 
 export interface EligibilityResult {
