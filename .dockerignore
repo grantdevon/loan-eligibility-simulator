@@ -1,0 +1,30 @@
+# Docker should ignore files that do not need to be copied into the image
+
+# dependencies
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-lock.yaml
+bun.lockb
+
+# build outputs
+Dist
+Dist-*
+dist
+build
+coverage
+
+# git & tooling
+.git
+.gitignore
+.vscode
+.github
+.DS_Store
+
+# env files
+.env
+.env.*
+
+# misc
+*.local
