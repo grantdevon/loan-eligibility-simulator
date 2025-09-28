@@ -8,8 +8,38 @@ const simulateDelay = async (min = 200, max = 500) => {
 };
 
 export const handlers = [
-    http.post('/api/loans/eligibility', async () => {
+    http.post('/api/loans/eligibility', async ({ request }) => {
         await simulateDelay();
+        const body = await request.json() as LoanEligibilityRequest;
+        const { personalInfo, loanDetails } = body || {};
+
+        const errors: string[] = [];
+
+        if (personalInfo?.age === undefined || personalInfo?.age === null) {
+            errors.push('Age must be between 18 and 65');
+        } else if (personalInfo.age < 18 || personalInfo.age > 65) {
+            errors.push('Age must be between 18 and 65');
+        }
+
+        if (loanDetails?.requestedAmount === undefined || loanDetails?.requestedAmount === null) {
+            errors.push('Loan amount must be between R5,000 and R300,000');
+        } else if (loanDetails.requestedAmount < 5000 || loanDetails.requestedAmount > 300000) {
+            errors.push('Loan amount must be between R5,000 and R300,000');
+        }
+
+        if (loanDetails?.loanTerm === undefined || loanDetails?.loanTerm === null) {
+            errors.push('Loan term must be between 6 and 60 months');
+        } else if (loanDetails.loanTerm < 6 || loanDetails.loanTerm > 60) {
+            errors.push('Loan term must be between 6 and 60 months');
+        }
+
+        if (errors.length > 0) {
+            return new HttpResponse(
+                JSON.stringify({ error: 'Validation failed', details: errors }),
+                { status: 400, headers: { 'Content-Type': 'application/json' } }
+            );
+        }
+
         return new HttpResponse(
             JSON.stringify({
                 eligibilityResult: {
@@ -36,87 +66,32 @@ export const handlers = [
         );
     }),
 
-    http.post('/api/loans/eligibility', async ({ request }) => {
+    http.post('/api/loans/calculate-rate', async ({ request }) => {
         await simulateDelay();
-        const body = await request.json() as LoanEligibilityRequest;
-        const { personalInfo, loanDetails } = body || {};
+        const body = await request.json() as InterestRateCalculationRequest;
+        const { loanAmount, loanTerm } = body || {};
 
-        if (!personalInfo?.age || loanDetails?.requestedAmount < 5000) {
+        const errors: string[] = [];
+
+        if (loanAmount === undefined || loanAmount === null) {
+            errors.push('Loan amount must be between R5,000 and R300,000');
+        } else if (loanAmount < 5000 || loanAmount > 300000) {
+            errors.push('Loan amount must be between R5,000 and R300,000');
+        }
+
+        if (loanTerm === undefined || loanTerm === null) {
+            errors.push('Loan term must be between 6 and 60 months');
+        } else if (loanTerm < 6 || loanTerm > 60) {
+            errors.push('Loan term must be between 6 and 60 months');
+        }
+
+        if (errors.length > 0) {
             return new HttpResponse(
-                JSON.stringify({
-                    error: 'Validation failed',
-                    details: [
-                        !personalInfo?.age ? 'Age is required' : null,
-                        loanDetails?.requestedAmount < 5000 ? 'Loan amount must be at least R5,000' : null,
-                    ].filter(Boolean),
-                }),
+                JSON.stringify({ error: 'Validation failed', details: errors }),
                 { status: 400, headers: { 'Content-Type': 'application/json' } }
             );
         }
-        return undefined;
-    }),
 
-    http.post('/api/loans/eligibility', async ({ request }) => {
-        await simulateDelay();
-        const body = await request.json() as LoanEligibilityRequest;
-        const { loanDetails } = body || {};
-
-        if (loanDetails?.requestedAmount === 999999) {
-            return new HttpResponse(
-                JSON.stringify({ error: 'Internal server error' }),
-                { status: 500, headers: { 'Content-Type': 'application/json' } }
-            );
-        }
-        return undefined;
-    }),
-
-    http.get('/api/loans/products', async () => {
-        await simulateDelay();
-        return new HttpResponse(
-            JSON.stringify({
-                products: [
-                    {
-                        id: 'personal_loan',
-                        name: 'Personal Loan',
-                        description: 'Flexible personal financing for various needs',
-                        minAmount: 5000.0,
-                        maxAmount: 300000.0,
-                        minTerm: 6,
-                        maxTerm: 60,
-                        interestRateRange: { min: 10.5, max: 18.5 },
-                        purposes: ['debt_consolidation', 'home_improvement', 'education', 'medical', 'other'],
-                    },
-                    {
-                        id: 'vehicle_loan',
-                        name: 'Vehicle Finance',
-                        description: 'Financing for new and used vehicles',
-                        minAmount: 50000.0,
-                        maxAmount: 1500000.0,
-                        minTerm: 12,
-                        maxTerm: 72,
-                        interestRateRange: { min: 8.5, max: 15.0 },
-                        purposes: ['new_vehicle', 'used_vehicle'],
-                    },
-                ],
-            }),
-            { status: 200, headers: { 'Content-Type': 'application/json' } }
-        );
-    }),
-
-    http.get('/api/loans/products', async ({ request }) => {
-        await simulateDelay();
-        const url = new URL(request.url);
-        if (url.searchParams.get('error') === 'true') {
-            return new HttpResponse(
-                JSON.stringify({ error: 'Failed to fetch loan products' }),
-                { status: 500, headers: { 'Content-Type': 'application/json' } }
-            );
-        }
-        return undefined;
-    }),
-
-    http.post('/api/loans/calculate-rate', async () => {
-        await simulateDelay();
         return new HttpResponse(
             JSON.stringify({
                 interestRate: 12.5,
@@ -124,58 +99,12 @@ export const handlers = [
                 totalInterest: 20148.0,
                 totalRepayment: 170148.0,
                 paymentSchedule: [
-                    {
-                        month: 1,
-                        payment: 7089.5,
-                        principal: 5527.17,
-                        interest: 1562.33,
-                        balance: 144472.83,
-                    },
-                    {
-                        month: 2,
-                        payment: 7089.5,
-                        principal: 5584.89,
-                        interest: 1504.61,
-                        balance: 138887.94,
-                    },
+                    { month: 1, payment: 7089.5, principal: 5527.17, interest: 1562.33, balance: 144472.83 },
+                    { month: 2, payment: 7089.5, principal: 5584.89, interest: 1504.61, balance: 138887.94 },
                 ],
             }),
             { status: 200, headers: { 'Content-Type': 'application/json' } }
         );
-    }),
-
-    http.post('/api/loans/calculate-rate', async ({ request }) => {
-        await simulateDelay();
-        const body = await request.json() as InterestRateCalculationRequest;
-        const { loanAmount, loanTerm } = body || {};
-
-        if (!loanAmount || loanAmount < 5000 || !loanTerm || loanTerm < 6) {
-            return new HttpResponse(
-                JSON.stringify({
-                    error: 'Validation failed',
-                    details: [
-                        !loanAmount ? 'Loan amount is required' : null,
-                        loanAmount < 5000 ? 'Loan amount must be at least R5,000' : null,
-                        !loanTerm ? 'Loan term is required' : null,
-                        loanTerm < 6 ? 'Loan term must be at least 6 months' : null,
-                    ].filter(Boolean),
-                }),
-                { status: 400, headers: { 'Content-Type': 'application/json' } }
-            );
-        }
-        return undefined;
-    }),
-
-    http.post('/api/loans/calculate-rate', async ({ request }) => {
-        await simulateDelay();
-        const body = await request.json() as InterestRateCalculationRequest;
-        if (body?.loanAmount === 999999) {
-            return new HttpResponse(
-                JSON.stringify({ error: 'Failed to calculate interest rate' }),
-                { status: 500, headers: { 'Content-Type': 'application/json' } }
-            );
-        }
-        return undefined;
     }),
 
     http.get('/api/loans/validation-rules', async () => {

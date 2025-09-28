@@ -1,0 +1,347 @@
+.loan-eligibility-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.loan-eligibility-card {
+    border-radius: 16px;
+    border: 2px solid;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.loan-eligibility-card.success {
+    background-color: #f0fdfa;
+    border-color: #a7f3d0;
+}
+
+.loan-eligibility-card.warning {
+    background-color: #fffbeb;
+    border-color: #fde68a;
+}
+
+.loan-eligibility-card.danger {
+    background-color: #fef2f2;
+    border-color: #fecaca;
+}
+
+.loan-eligibility-header {
+    padding: 24px;
+    color: white;
+}
+
+.loan-eligibility-header.success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.loan-eligibility-header.warning {
+    background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+}
+
+.loan-eligibility-header.danger {
+    background: linear-gradient(135deg, #ef4444 0%, #ec4899 100%);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-icon {
+    padding: 8px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-text h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 0 4px 0;
+}
+
+.header-text p {
+    margin: 0;
+    opacity: 0.9;
+}
+
+.loan-eligibility-content {
+    padding: 24px;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+}
+
+@media (max-width: 768px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.progress-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.circular-progress {
+    align-self: center;
+    display: flex;
+    position: relative;
+    width: 128px;
+    height: 128px;
+}
+
+.progress-svg {
+    width: 128px;
+    height: 128px;
+    transform: rotate(-90deg);
+}
+
+.progress-bg {
+    stroke: #e5e7eb;
+    stroke-width: 8;
+    fill: none;
+}
+
+.progress-bar {
+    stroke-width: 8;
+    fill: none;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s ease-in-out;
+}
+
+.progress-bar.success {
+    stroke: #059669;
+}
+
+.progress-bar.warning {
+    stroke: #f59e0b;
+}
+
+.progress-bar.danger {
+    stroke: #ef4444;
+}
+
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.progress-value {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.progress-value.success {
+    color: #059669;
+}
+
+.progress-value.warning {
+    color: #f59e0b;
+}
+
+.progress-value.danger {
+    color: #ef4444;
+}
+
+.progress-label {
+    font-size: 12px;
+    color: #6b7280;
+    margin: 0;
+}
+
+.progress-info {
+    text-align: center;
+}
+
+.progress-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 8px;
+}
+
+.risk-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    gap: 4px;
+}
+
+.risk-badge.success {
+    background-color: #f0fdfa;
+    color: #059669;
+}
+
+.risk-badge.warning {
+    background-color: #fffbeb;
+    color: #f59e0b;
+}
+
+.risk-badge.danger {
+    background-color: #fef2f2;
+    color: #ef4444;
+}
+
+.details-section {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.info-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.info-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.info-icon {
+    padding: 8px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-icon.amount {
+    background-color: #dbeafe;
+}
+
+.info-icon.amount svg {
+    color: #2563eb;
+}
+
+.info-icon.reason {
+    background-color: #f3e8ff;
+}
+
+.info-icon.reason svg {
+    color: #9333ea;
+}
+
+.info-text h4 {
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 2px 0;
+}
+
+.info-text p {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0;
+}
+
+.amount-display {
+    font-size: 30px;
+    font-weight: bold;
+    color: #1f2937;
+}
+
+.reason-text {
+    color: #6b7280;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.action-buttons {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    justify-content: center;
+}
+
+@media (max-width: 640px) {
+    .action-buttons {
+        flex-direction: column;
+    }
+}
+
+.btn {
+    padding: 12px 32px;
+    font-weight: 600;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    color: white;
+    transform: scale(1);
+}
+
+.btn-primary.success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.btn-primary.warning {
+    background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+}
+
+.btn-primary.danger {
+    background: linear-gradient(135deg, #ef4444 0%, #ec4899 100%);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: scale(1.05);
+}
+
+.btn-secondary {
+    background-color: white;
+    color: #374151;
+    border: 2px solid #e5e7eb;
+}
+
+.btn-secondary:hover {
+    border-color: #d1d5db;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.loan-eligibility-container {
+    animation: fadeIn 0.5s ease-out;
+    align-self: center;
+}
