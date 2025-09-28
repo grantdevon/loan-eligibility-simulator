@@ -38,20 +38,20 @@ export interface FormValidationSchema {
  */
 
 export interface PersonalInfoForm {
-    age: number;
+    age: number | null;
     employmentStatus: EmploymentStatus;
-    employmentDuration: number;
+    employmentDuration: number | null;
 }
 
 export interface FinancialInfoForm {
-    monthlyIncome: number;
-    monthlyExpenses: number;
-    creditScore: number;
+    monthlyIncome: number | null;
+    monthlyExpenses: number | null;
+    creditScore: number | null;
 }
 
 export interface LoanDetailsForm {
-    requestedAmount: number;
-    loanTerm: number;
+    requestedAmount: number | null;
+    loanTerm: number | null;
 }
 export type LoanApplicationForm = {
     personalInfo: PersonalInfoForm;

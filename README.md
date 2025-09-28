@@ -1,3 +1,70 @@
+# Loan Eligibility Simulator
+
+This project is a React + TypeScript app scaffolded with Vite. Below are concise instructions to build, run, and test it locally and via Docker.
+
+## Prerequisites
+- Node.js 20.x and npm
+- Docker (for containerized build/run)
+
+## Local development
+1) Install dependencies
+
+```bash
+npm ci
+```
+
+2) Start the dev server
+
+```bash
+npm run dev
+```
+
+The dev server runs on http://localhost:5173 by default.
+
+## Local production build
+
+```bash
+npm run build
+npm run preview -- --host 0.0.0.0 --port 5173
+```
+
+Then open http://localhost:5173.
+
+## Testing
+
+```bash
+npm test
+```
+
+- Watch mode: `npm run test:watch`
+- Lint: `npm run lint`
+- Format: `npm run format:check` or `npm run format`
+
+## Docker
+This repository includes a multi-stage Dockerfile that builds the production bundle and serves it with nginx.
+
+### Build the image
+
+```bash
+docker build -t loan-eligibility-simulator:latest .
+```
+
+### Run the container
+
+```bash
+# Map host port 5173 to container port 80
+docker run -it --rm -p 5173:80 loan-eligibility-simulator:latest
+```
+
+Now open http://localhost:5173.
+
+Notes:
+- The runtime image is nginx serving the compiled `dist/` folder.
+- Client-side routing is supported via nginx fallback to `index.html`.
+- Mock Service Worker (MSW) is only enabled in development mode; the production image does not start MSW.
+
+---
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
